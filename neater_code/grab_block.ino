@@ -1,18 +1,38 @@
-void grab_block() {     // moving to block to grab it
+bool grab_block(bool sweep) {     // moving to block to grab it
   int distance = 0;   
   distance = sensor.getDistance();
   LMotor->run(FORWARD);
   RMotor->run(FORWARD);
-  while (distance < 100) {
-      LMotor->setSpeed(50); 
-      RMotor->setSpeed(50);
+
+  if (sweep == true) {
+    while (distance > 100) {     //grab block for sweep
+        LMotor->setSpeed(50); 
+        RMotor->setSpeed(50);
+
+    }
+    LMotor->setSpeed(0); 
+    RMotor->setSpeed(0);
+
+    claw();
+    return true;
   }
 
-  LMotor->setSpeed(0); 
-  RMotor->setSpeed(0);
+  if (distance < 100 && sweep == false){    // grab block for line following
 
-  claw();
-};
+    LMotor->setSpeed(0); 
+    RMotor->setSpeed(0);
+
+    claw();
+
+    return true;
+  }
+
+  else {
+    return false;
+  }
+
+
+}
 
 void claw() {
     int mag = 0;

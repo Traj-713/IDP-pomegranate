@@ -1,3 +1,5 @@
+// make prototypes
+
 void route(){
   turn_left(0);
   delay(500);
