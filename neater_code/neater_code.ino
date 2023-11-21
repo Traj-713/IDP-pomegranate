@@ -13,7 +13,8 @@ For use with the Adafruit Motor Shield v2
 #include "DFRobot_VL53L0X.h"
 DFRobot_VL53L0X sensor;
 
-
+#define MAX_RANGE (520)//the max measurement value of the module is 520cm(a little bit longer than effective max range)
+#define  ADC_SOLUTION (1023.0)
 
 // Create the motor shield object with the default I2C address
 Adafruit_MotorShield AFMS = Adafruit_MotorShield();
@@ -30,7 +31,8 @@ Servo clawServo;
 // clawServo.attach(9);
 int servoPos = 0;
 
-
+int dist_t = 0;
+int sensity_t = 0;
 
 
 bool end = false;
@@ -49,6 +51,7 @@ const int redLEDPIN = 8; //magnetic
 const int buttonPIN = 10;
 const int sweepButtonPIN = 11;
 const int magnetPIN = 12;
+const int sensityPin = A0;
 
 
 

@@ -23,7 +23,8 @@ void line_route() {
   }
 }
 
-void straight_to_T(){
+void straight_to_T(int detection = 0){
+
   end = false;
   long int start_time = millis();
   long int end_time = millis();
@@ -40,7 +41,7 @@ void straight_to_T(){
 
     if (grabbed == true) {
       return_to_base = true;
-      break
+      break;
     }
     
 
@@ -72,11 +73,23 @@ void straight_to_T(){
       digitalWrite(blueLEDPIN, LOW);
       end = true;
     }
-    
+    if (detection == 1) {
+      dist_t = sensor.getDistance();
+      if (dist_t < 50) {
+        return ("DETECTED");
+      }
+    }
+    if (detection == 2) {
+      sensity_t = analogRead(sensityPin);
+      dist_t = sensity_t * MAX_RANGE /ADC_SOLUTION;
+      if (dist_t < 50) {
+        return ("DETECTED");
+      }
+    }
   }
 }
 
-void straight_to_cross(){
+void straight_to_cross(int detection = 0){
   end = false;
   long int start_time = millis();
   long int end_time = millis();
@@ -112,11 +125,23 @@ void straight_to_cross(){
       digitalWrite(blueLEDPIN, LOW);
       end = true;
     }
-    
+       if (detection == 1) {
+      dist_t = sensor.getDistance();
+      if (dist_t < 50) {
+        return ("DETECTED");
+      }
+    }
+    if (detection == 2) {
+      sensity_t = analogRead(sensityPin);
+      dist_t = sensity_t * MAX_RANGE /ADC_SOLUTION;
+      if (dist_t < 50) {
+        return ("DETECTED");
+      }
+    } 
   }
 }
 
-void straight_to_cornerRight(){
+void straight_to_cornerRight(int detection = 0){
   end = false;
   long int start_time = millis();
   long int end_time = millis();
@@ -152,11 +177,23 @@ void straight_to_cornerRight(){
       digitalWrite(blueLEDPIN, LOW);
       end = true;
     }
-    
+       if (detection == 1) {
+      dist_t = sensor.getDistance();
+      if (dist_t < 50) {
+        return ("DETECTED");
+      }
+    }
+    if (detection == 2) {
+      sensity_t = analogRead(sensityPin);
+      dist_t = sensity_t * MAX_RANGE /ADC_SOLUTION;
+      if (dist_t < 50) {
+        return ("DETECTED");
+      }
+    } 
   }
 }
 
-void straight_to_cornerLeft(){
+void straight_to_cornerLeft(int detection = 0){
   end = false;
   long int start_time = millis();
   long int end_time = millis();
@@ -193,11 +230,23 @@ void straight_to_cornerLeft(){
       digitalWrite(blueLEDPIN, LOW);
       end = true;
     }
-    
+        if (detection == 1) {
+      dist_t = sensor.getDistance();
+      if (dist_t < 50) {
+        return ("DETECTED");
+      }
+    }
+    if (detection == 2) {
+      sensity_t = analogRead(sensityPin);
+      dist_t = sensity_t * MAX_RANGE /ADC_SOLUTION;
+      if (dist_t < 50) {
+        return ("DETECTED");
+      }
+    }
   }
 }
 
-void straight_to_branchLeft(){
+void straight_to_branchLeft(int detection = 0){
   end = false;
   long int start_time = millis();
   long int end_time = millis();
@@ -234,11 +283,23 @@ void straight_to_branchLeft(){
       digitalWrite(blueLEDPIN, LOW);
       end = true;
     }
-    
+        if (detection == 1) {
+      dist_t = sensor.getDistance();
+      if (dist_t < 50) {
+        return ("DETECTED");
+      }
+    }
+    if (detection == 2) {
+      sensity_t = analogRead(sensityPin);
+      dist_t = sensity_t * MAX_RANGE /ADC_SOLUTION;
+      if (dist_t < 50) {
+        return ("DETECTED");
+      }
+    }
   }
 }
 
-void straight_to_branchRight(){
+void straight_to_branchRight(int detection = 0){
   end = false;
   long int start_time = millis();
   long int end_time = millis();
@@ -275,11 +336,23 @@ void straight_to_branchRight(){
       digitalWrite(blueLEDPIN, LOW);
       end = true;
     }
-    
+        if (detection == 1) {
+      dist_t = sensor.getDistance();
+      if (dist_t < 50) {
+        return ("DETECTED");
+      }
+    }
+    if (detection == 2) {
+      sensity_t = analogRead(sensityPin);
+      dist_t = sensity_t * MAX_RANGE /ADC_SOLUTION;
+      if (dist_t < 50) {
+        return ("DETECTED");
+      }
+    }
   }
 }
 
-void turn_right(int delay_time){
+void turn_right(int delay_time, int detection = 0){
   end = false;
   long int start_time = millis();
   long int end_time = millis();
@@ -323,11 +396,23 @@ void turn_right(int delay_time){
       digitalWrite(blueLEDPIN, LOW);
       end = true;
     }
-    
+        if (detection == 1) {
+      dist_t = sensor.getDistance();
+      if (dist_t < 50) {
+        return ("DETECTED");
+      }
+    }
+    if (detection == 2) {
+      sensity_t = analogRead(sensityPin);
+      dist_t = sensity_t * MAX_RANGE /ADC_SOLUTION;
+      if (dist_t < 50) {
+        return ("DETECTED");
+      }
+    }
   }
 }
 
-void turn_left(int delay_time){
+void turn_left(int delay_time, int detection = 0){
   end = false;
   long int start_time = millis();
   long int end_time = millis();
@@ -369,7 +454,19 @@ void turn_left(int delay_time){
       digitalWrite(blueLEDPIN, LOW);
       end = true;
     }
-    
+        if (detection == 1) {
+      dist_t = sensor.getDistance();
+      if (dist_t < 50) {
+        return ("DETECTED");
+      }
+    }
+    if (detection == 2) {
+      sensity_t = analogRead(sensityPin);
+      dist_t = sensity_t * MAX_RANGE /ADC_SOLUTION;
+      if (dist_t < 50) {
+        return ("DETECTED");
+      }
+    }
   }
 }
 
