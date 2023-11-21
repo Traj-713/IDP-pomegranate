@@ -41,11 +41,11 @@ int buttonstate = 0;
 int button_sweep_state = 0;
 
 
-const int frontLeftLineSensorPIN = 6;
-const int frontRightLineSensorPIN = 3;
+const int frontLeftLineSensorPIN = 3;
+const int frontRightLineSensorPIN = 2;
 const int leftLineSensorPIN = 4;
 const int rightLineSensorPIN = 5;
-const int blueLEDPIN = 2; //moving; return
+const int blueLEDPIN = 6; //moving; return
 const int greenLEDPIN = 7; //non-magnetic
 const int redLEDPIN = 8; //magnetic
 const int buttonPIN = 10;
@@ -115,9 +115,8 @@ void setup() {
   //Laser rangefinder begins to work
   sensor.start();
 
-  int current_dist = 0;
-  int previous_dist = 0;
-  int dist_diff = 0;
+  int distance = 0;
+  bool magnetic = false;
 
 
   int speed = 120;
@@ -145,8 +144,8 @@ void loop() {
 
   if (line_blocks = true) {
 
-    claw();
-    //line_route();
+    //claw();
+    line_route();
     // turn_left(1000);
     // delay(1000);
 

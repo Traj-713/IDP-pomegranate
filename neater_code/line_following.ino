@@ -3,27 +3,56 @@ void line_route() {
     
 
     if (return_to_base == false) {    // stops line route if return_to_base is true
-          straight_to_cross();
+          straight_to_cross(1);         // parameters are detection modes
     }
 
-    turn_right(150);
+    Serial.println("error");
+    if (return_to_base == false) {    // stops line route if return_to_base is true
+          turn_right(150, 0);         // parameters are detection modes
+    }    
     
-    straight_to_T();
+
+    //Serial.println("FINISH TURNING RIGHT");
+    if (return_to_base == false) {    // stops line route if return_to_base is true
+          straight_to_T(1);         // parameters are detection modes
+    }    
     
-    turn_left(150);
+    if (return_to_base == false) {    // stops line route if return_to_base is true
+          turn_left(150, 0);         // parameters are detection modes
+    }    
+    
+    if (return_to_base == false) {    // stops line route if return_to_base is true
+          straight_to_branchLeft(1,1);         // parameters are detection modes
+    }
+    
+    if (return_to_base == false) {    // stops line route if return_to_base is true
+          turn_left(150, 0);         // parameters are detection modes
+    }
+    
+    if (return_to_base == false) {    
+          straight_to_branchLeft(1,2);         
+    }
 
-    straight_to_branchLeft();
 
-    turn_left(150);
+    if (return_to_base == false) {    
+           turn_left(150, 0);         
+    }
 
     //something special (add counter, add argument)
-    turn_left(150);
+   
 
-    straight_to_cross();    //takes us back to box
+    if (return_to_base == false) {    
+          straight_to_cross(0);         
+    }
+        //takes us back to box
+
+
+    Serial.println("FINISH***************************");
+    delay(1000000);
   }
 }
 
-void straight_to_T(int detection = 0){
+void straight_to_T(int detection){
 
   end = false;
   long int start_time = millis();
@@ -37,12 +66,12 @@ void straight_to_T(int detection = 0){
   while (end == false){
     Serial.println("*****T*******");
 
-    grabbed = grab_block(false);
+    // grabbed = grab_block(false);
 
-    if (grabbed == true) {
-      return_to_base = true;
-      break;
-    }
+    // if (grabbed == true) {
+    //   return_to_base = true;
+    //   break;
+    // }
     
 
 
@@ -51,7 +80,7 @@ void straight_to_T(int detection = 0){
     int leftLineResult = digitalRead(leftLineSensorPIN);
     int rightLineResult = digitalRead(rightLineSensorPIN);
     
-    testing_line_sensors(FLLineResult, FRLineResult, leftLineResult, rightLineResult);
+    //testing_line_sensors(FLLineResult, FRLineResult, leftLineResult, rightLineResult);
 
     end_time = millis();
     time_diff = end_time - start_time;
@@ -75,7 +104,14 @@ void straight_to_T(int detection = 0){
     }
     if (detection == 1) {
       dist_t = sensor.getDistance();
-      if (dist_t < 50) {
+      if (dist_t > 20 && dist_t < 80) {
+        Serial.println(dist_t);
+        grabbed = grab_block(false);
+        if (grabbed == true) {
+          return_to_base = true;
+          Serial.println("triggered");
+          break;
+        }
         return ("DETECTED");
       }
     }
@@ -89,12 +125,15 @@ void straight_to_T(int detection = 0){
   }
 }
 
-void straight_to_cross(int detection = 0){
+
+
+void straight_to_cross(int detection){
   end = false;
   long int start_time = millis();
   long int end_time = millis();
   long int time_diff = 0;
   int speed = 120;
+  bool grabbed = false;
 
   while (end == false){
 
@@ -103,13 +142,14 @@ void straight_to_cross(int detection = 0){
     int leftLineResult = digitalRead(leftLineSensorPIN);
     int rightLineResult = digitalRead(rightLineSensorPIN);
     
-    testing_line_sensors(FLLineResult, FRLineResult, leftLineResult, rightLineResult);
+    //testing_line_sensors(FLLineResult, FRLineResult, leftLineResult, rightLineResult);
 
     end_time = millis();
     time_diff = end_time - start_time;
-    Serial.print("Time Difference: "); Serial.println(time_diff);
+   // Serial.print("Time Difference: "); Serial.println(time_diff);
 
     error_correction(speed, FRLineResult, FLLineResult);
+    
 
     digitalWrite(blueLEDPIN, HIGH);
     // delay(250);
@@ -125,9 +165,17 @@ void straight_to_cross(int detection = 0){
       digitalWrite(blueLEDPIN, LOW);
       end = true;
     }
+
        if (detection == 1) {
       dist_t = sensor.getDistance();
-      if (dist_t < 50) {
+      if (dist_t > 20 && dist_t < 80) {
+        Serial.println(dist_t);
+        grabbed = grab_block(false);
+        if (grabbed == true) {
+          return_to_base = true;
+          Serial.println("triggered");
+          break;
+        }
         return ("DETECTED");
       }
     }
@@ -137,16 +185,17 @@ void straight_to_cross(int detection = 0){
       if (dist_t < 50) {
         return ("DETECTED");
       }
-    } 
+    }
   }
 }
 
-void straight_to_cornerRight(int detection = 0){
+void straight_to_cornerRight(int detection){
   end = false;
   long int start_time = millis();
   long int end_time = millis();
   long int time_diff = 0;
   int speed = 120;
+  bool grabbed = false;
 
   while (end == false){
     Serial.println("START");
@@ -160,7 +209,7 @@ void straight_to_cornerRight(int detection = 0){
 
     end_time = millis();
     time_diff = end_time - start_time;
-    Serial.print("Time Difference: "); Serial.println(time_diff);
+    //Serial.print("Time Difference: "); Serial.println(time_diff);
 
     error_correction(speed, FRLineResult, FLLineResult);
 
@@ -177,9 +226,16 @@ void straight_to_cornerRight(int detection = 0){
       digitalWrite(blueLEDPIN, LOW);
       end = true;
     }
-       if (detection == 1) {
+              if (detection == 1) {
       dist_t = sensor.getDistance();
-      if (dist_t < 50) {
+      if (dist_t > 20 && dist_t < 80) {
+        Serial.println(dist_t);
+        grabbed = grab_block(false);
+        if (grabbed == true) {
+          return_to_base = true;
+          Serial.println("triggered");
+          break;
+        }
         return ("DETECTED");
       }
     }
@@ -193,15 +249,16 @@ void straight_to_cornerRight(int detection = 0){
   }
 }
 
-void straight_to_cornerLeft(int detection = 0){
+void straight_to_cornerLeft(int detection){
   end = false;
   long int start_time = millis();
   long int end_time = millis();
   long int time_diff = 0;
   int speed = 120;
+  bool grabbed = false;
 
   while (end == false){
-    Serial.println("START");
+    //Serial.println("START");
 
     int FLLineResult = digitalRead(frontLeftLineSensorPIN);
     int FRLineResult = digitalRead(frontRightLineSensorPIN);
@@ -212,7 +269,7 @@ void straight_to_cornerLeft(int detection = 0){
 
     end_time = millis();
     time_diff = end_time - start_time;
-    Serial.print("Time Difference: "); Serial.println(time_diff);
+    //Serial.print("Time Difference: "); Serial.println(time_diff);
 
     error_correction(speed, FRLineResult, FLLineResult);
 
@@ -230,9 +287,16 @@ void straight_to_cornerLeft(int detection = 0){
       digitalWrite(blueLEDPIN, LOW);
       end = true;
     }
-        if (detection == 1) {
+               if (detection == 1) {
       dist_t = sensor.getDistance();
-      if (dist_t < 50) {
+      if (dist_t > 20 && dist_t < 80) {
+        Serial.println(dist_t);
+        grabbed = grab_block(false);
+        if (grabbed == true) {
+          return_to_base = true;
+          Serial.println("triggered");
+          break;
+        }
         return ("DETECTED");
       }
     }
@@ -246,12 +310,14 @@ void straight_to_cornerLeft(int detection = 0){
   }
 }
 
-void straight_to_branchLeft(int detection = 0){
+void straight_to_branchLeft(int detection, int number){
   end = false;
   long int start_time = millis();
   long int end_time = millis();
   long int time_diff = 0;
   int speed = 110;
+  int current_number = 0;
+  bool grabbed = false;
 
   while (end == false){
     Serial.println("****BRANCH LEFT****");
@@ -278,14 +344,30 @@ void straight_to_branchLeft(int detection = 0){
 
     //if (rightLineResult == 1 && leftLineResult == 1 && frontLineResult == 0 && time_diff > 3000){
     if (FLLineResult == 1 && FRLineResult == 1 && leftLineResult == 1 && rightLineResult == 0 && time_diff > 3000) { //FOR TESTING
-      LMotor->setSpeed(0);
-      RMotor->setSpeed(0);
-      digitalWrite(blueLEDPIN, LOW);
-      end = true;
+      current_number += 1;
+      if (current_number == number){
+        LMotor->setSpeed(0);
+        RMotor->setSpeed(0);
+        digitalWrite(blueLEDPIN, LOW);
+        end = true;
+      } else{
+        Serial.println("DETECTED BRANCH LEFT");
+        start_time = millis();
+        end_time = millis();
+        time_diff = end_time - start_time;
+      }
+      
     }
-        if (detection == 1) {
+      if (detection == 1) {
       dist_t = sensor.getDistance();
-      if (dist_t < 50) {
+      if (dist_t > 20 && dist_t < 80) {
+        Serial.println(dist_t);
+        grabbed = grab_block(false);
+        if (grabbed == true) {
+          return_to_base = true;
+          Serial.println("triggered");
+          break;
+        }
         return ("DETECTED");
       }
     }
@@ -299,12 +381,13 @@ void straight_to_branchLeft(int detection = 0){
   }
 }
 
-void straight_to_branchRight(int detection = 0){
+void straight_to_branchRight(int detection){
   end = false;
   long int start_time = millis();
   long int end_time = millis();
   long int time_diff = 0;
   int speed = 110;
+  bool grabbed = false;
 
   while (end == false){
     Serial.println("****BRANCH RIGHT****");
@@ -336,9 +419,16 @@ void straight_to_branchRight(int detection = 0){
       digitalWrite(blueLEDPIN, LOW);
       end = true;
     }
-        if (detection == 1) {
+               if (detection == 1) {
       dist_t = sensor.getDistance();
-      if (dist_t < 50) {
+      if (dist_t > 20 && dist_t < 80) {
+        Serial.println(dist_t);
+        grabbed = grab_block(false);
+        if (grabbed == true) {
+          return_to_base = true;
+          Serial.println("triggered");
+          break;
+        }
         return ("DETECTED");
       }
     }
@@ -352,7 +442,7 @@ void straight_to_branchRight(int detection = 0){
   }
 }
 
-void turn_right(int delay_time, int detection = 0){
+void turn_right(int delay_time, int detection){
   end = false;
   long int start_time = millis();
   long int end_time = millis();
@@ -366,11 +456,11 @@ void turn_right(int delay_time, int detection = 0){
     int leftLineResult = digitalRead(leftLineSensorPIN);
     int rightLineResult = digitalRead(rightLineSensorPIN);
     
-    testing_line_sensors(FLLineResult, FRLineResult, leftLineResult, rightLineResult);
+    // testing_line_sensors(FLLineResult, FRLineResult, leftLineResult, rightLineResult);
 
     end_time = millis();
     time_diff = end_time - start_time;
-    Serial.print("Time Difference: "); Serial.println(time_diff);
+    // Serial.print("Time Difference: "); Serial.println(time_diff);
 
     // error_correction(speed, FRLineResult, FLLineResult);
 
@@ -396,7 +486,7 @@ void turn_right(int delay_time, int detection = 0){
       digitalWrite(blueLEDPIN, LOW);
       end = true;
     }
-        if (detection == 1) {
+    if (detection == 1) {
       dist_t = sensor.getDistance();
       if (dist_t < 50) {
         return ("DETECTED");
@@ -412,7 +502,7 @@ void turn_right(int delay_time, int detection = 0){
   }
 }
 
-void turn_left(int delay_time, int detection = 0){
+void turn_left(int delay_time, int detection){
   end = false;
   long int start_time = millis();
   long int end_time = millis();

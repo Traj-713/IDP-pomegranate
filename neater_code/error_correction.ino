@@ -6,7 +6,7 @@ void error_correction(int speed, int FLLineResult, int FRLineResult) {
       RMotor->run(FORWARD);
       RMotor->setSpeed(speed);
       // delay(10);
-      Serial.print("Straight");
+      //Serial.print("Straight");
     } else if (FLLineResult == 1 && FRLineResult == 0)  {
       LMotor->run(FORWARD);
       LMotor->setSpeed(speed-50);
@@ -22,7 +22,7 @@ void error_correction(int speed, int FLLineResult, int FRLineResult) {
       RMotor->run(FORWARD);
       RMotor->setSpeed(speed-50);
       // delay(10);
-      Serial.print("Derail to right");
+      Serial.print("Derail to left");
     }
 
 }
