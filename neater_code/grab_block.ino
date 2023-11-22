@@ -36,7 +36,7 @@ bool grab_block(bool sweep) {     // moving to block to grab it
 
 void claw() {
     int mag = 0;
-    bool magnetic = false;    // MAYBE MOVE TO SOMEWEHRE ELSE
+    //bool magnetic = false;    // MAYBE MOVE TO SOMEWEHRE ELSE
 
     servoPos = 0;    // degree to flat
     int lowerPos = 15;
@@ -68,7 +68,7 @@ void claw() {
 
     
   
-    while (time_diff < 7000) {
+    while (time_diff < 2000) {
       mag = digitalRead(magnetPIN);
       end_time = millis();
 
@@ -113,6 +113,8 @@ void claw() {
     delay(5000);
     //Serial.println("grren");
     }
+
+    return_to_base = true;
  
     // for (servoPos = lowerPos; servoPos <= upperPos; servoPos += 1) { // raises claww
     //     // in steps of 1 degree

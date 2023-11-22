@@ -3,7 +3,6 @@ bool back_to_node(){
   long int start_time = millis();
   long int end_time = millis();
   long int time_diff = 0;
-  int speed = 120;
   bool grabbed = false;
 
   while (end == false){
@@ -31,10 +30,10 @@ bool back_to_node(){
       end = true;
       if (FLLineResult == 1 && FRLineResult == 1 && leftLineResult == 1 && rightLineResult == 1){
         Serial.println("AT CROSS");
-        return false;
+        return true;
       } else {
         Serial.println("At a normal node, not CROSS");
-        return true;
+        return false;
       }
     }
   }
@@ -45,7 +44,6 @@ bool forward_to_node(){
   long int start_time = millis();
   long int end_time = millis();
   long int time_diff = 0;
-  int speed = 120;
   bool grabbed = false;
 
   while (end == false){
@@ -85,13 +83,13 @@ bool forward_to_node(){
 void return_cross(){
   bool returned_to_cross = false;
   returned_to_cross = back_to_node();
-  turn_left(150);
+  turn_left(turn_delay, 0);
 
   while (returned_to_cross == false){
 
     returned_to_cross = forward_to_node();
 
-    turn_right(150);
+    turn_right(turn_delay, 0);
     
   }
 }

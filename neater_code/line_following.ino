@@ -1,3 +1,5 @@
+int far_away = 70;
+
 void line_route() {
   if (return_to_base == false) {
     
@@ -8,7 +10,7 @@ void line_route() {
 
     Serial.println("error");
     if (return_to_base == false) {    // stops line route if return_to_base is true
-          turn_right(150, 0);         // parameters are detection modes
+          turn_right(turn_delay, 0);         // parameters are detection modes
     }    
     
 
@@ -18,7 +20,7 @@ void line_route() {
     }    
     
     if (return_to_base == false) {    // stops line route if return_to_base is true
-          turn_left(150, 0);         // parameters are detection modes
+          turn_left(turn_delay, 0);         // parameters are detection modes
     }    
     
     if (return_to_base == false) {    // stops line route if return_to_base is true
@@ -26,7 +28,7 @@ void line_route() {
     }
     
     if (return_to_base == false) {    // stops line route if return_to_base is true
-          turn_left(150, 0);         // parameters are detection modes
+          turn_left(turn_delay, 0);         // parameters are detection modes
     }
     
     if (return_to_base == false) {    
@@ -35,7 +37,7 @@ void line_route() {
 
 
     if (return_to_base == false) {    
-           turn_left(150, 0);         
+           turn_left(turn_delay, 0);         
     }
 
     //something special (add counter, add argument)
@@ -45,6 +47,8 @@ void line_route() {
           straight_to_cross(0);         
     }
         //takes us back to box
+
+    return_cross();
 
 
     Serial.println("FINISH***************************");
@@ -58,7 +62,6 @@ void straight_to_T(int detection){
   long int start_time = millis();
   long int end_time = millis();
   long int time_diff = 0;
-  int speed = 120;
   bool grabbed = false;
 
 
@@ -104,7 +107,7 @@ void straight_to_T(int detection){
     }
     if (detection == 1) {
       dist_t = sensor.getDistance();
-      if (dist_t > 20 && dist_t < 80) {
+      if (dist_t > 20 && dist_t < far_away) {
         Serial.println(dist_t);
         grabbed = grab_block(false);
         if (grabbed == true) {
@@ -132,8 +135,10 @@ void straight_to_cross(int detection){
   long int start_time = millis();
   long int end_time = millis();
   long int time_diff = 0;
-  int speed = 120;
   bool grabbed = false;
+
+  LMotor->setSpeed(100);
+  RMotor->setSpeed(100);
 
   while (end == false){
 
@@ -168,7 +173,7 @@ void straight_to_cross(int detection){
 
        if (detection == 1) {
       dist_t = sensor.getDistance();
-      if (dist_t > 20 && dist_t < 80) {
+      if (dist_t > 20 && dist_t < far_away) {
         Serial.println(dist_t);
         grabbed = grab_block(false);
         if (grabbed == true) {
@@ -194,7 +199,6 @@ void straight_to_cornerRight(int detection){
   long int start_time = millis();
   long int end_time = millis();
   long int time_diff = 0;
-  int speed = 120;
   bool grabbed = false;
 
   while (end == false){
@@ -228,7 +232,7 @@ void straight_to_cornerRight(int detection){
     }
               if (detection == 1) {
       dist_t = sensor.getDistance();
-      if (dist_t > 20 && dist_t < 80) {
+      if (dist_t > 20 && dist_t < far_away) {
         Serial.println(dist_t);
         grabbed = grab_block(false);
         if (grabbed == true) {
@@ -254,7 +258,6 @@ void straight_to_cornerLeft(int detection){
   long int start_time = millis();
   long int end_time = millis();
   long int time_diff = 0;
-  int speed = 120;
   bool grabbed = false;
 
   while (end == false){
@@ -315,7 +318,6 @@ void straight_to_branchLeft(int detection, int number){
   long int start_time = millis();
   long int end_time = millis();
   long int time_diff = 0;
-  int speed = 110;
   int current_number = 0;
   bool grabbed = false;
 
@@ -386,7 +388,6 @@ void straight_to_branchRight(int detection){
   long int start_time = millis();
   long int end_time = millis();
   long int time_diff = 0;
-  int speed = 110;
   bool grabbed = false;
 
   while (end == false){
@@ -465,10 +466,10 @@ void turn_right(int delay_time, int detection){
     // error_correction(speed, FRLineResult, FLLineResult);
 
     LMotor->run(FORWARD);
-    LMotor->setSpeed(80);
+    LMotor->setSpeed(speed);
     delay(10);
     RMotor->run(BACKWARD);
-    RMotor->setSpeed(80);
+    RMotor->setSpeed(speed);
     delay(10);
     digitalWrite(blueLEDPIN, HIGH);
     // delay(250);
@@ -525,10 +526,10 @@ void turn_left(int delay_time, int detection){
     // error_correction(speed, FRLineResult, FLLineResult);
 
     LMotor->run(BACKWARD);
-    LMotor->setSpeed(80);
+    LMotor->setSpeed(speed);
     delay(10);
     RMotor->run(FORWARD);
-    RMotor->setSpeed(80);
+    RMotor->setSpeed(speed);
     delay(10);
     digitalWrite(blueLEDPIN, HIGH);
     // delay(250);

@@ -57,6 +57,10 @@ const int sensityPin = A0;
 
 bool line_blocks = false;
 bool return_to_base = false;
+bool magnetic = false;
+int speed = 160;
+
+int turn_delay = 0;
 
 // setting up prototype functions. stops rare error...
 
@@ -64,6 +68,7 @@ bool grab_block();
 void sweep();
 bool detected();
 void error_correction();
+void error_correction_backward();
 void claw();
 
 void line_route();
@@ -75,6 +80,11 @@ void straight_to_branchLeft();
 void straight_to_branchRight();
 void turn_right(int delay_time);
 void turn_left(int delay_time);
+
+void return_cross();
+bool back_to_node();
+bool forward_to_node();
+
 
 
 void setup() {
@@ -116,7 +126,7 @@ void setup() {
   sensor.start();
 
   int distance = 0;
-  bool magnetic = false;
+
 
 
   int speed = 120;
@@ -141,6 +151,8 @@ void loop() {
   //delay(1000);
 
   Serial.print("START");
+
+  return_to_base = false;
 
   if (line_blocks = true) {
 
