@@ -23,7 +23,7 @@ bool back_to_node(){
     digitalWrite(blueLEDPIN, HIGH);
 
 
-    if (FLLineResult == 1 && FRLineResult == 1 && leftLineResult == 1 && time_diff > 3000) { 
+    if ((FLLineResult == 1 || FRLineResult == 1) && leftLineResult == 1 && time_diff > 3000) { 
       LMotor->setSpeed(0);
       RMotor->setSpeed(0);
       digitalWrite(blueLEDPIN, LOW);

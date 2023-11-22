@@ -1,4 +1,5 @@
 int far_away = 70;
+int turn_delay = 100;
 
 void line_route() {
   if (return_to_base == false) {
@@ -164,7 +165,7 @@ void straight_to_cross(int detection){
     
 
     //if (rightLineResult == 1 && leftLineResult == 1 && frontLineResult == 0 && time_diff > 3000){
-    if (FLLineResult == 1 && FRLineResult == 1 && leftLineResult == 1 && rightLineResult == 1 && time_diff > 3000) { //FOR TESTING
+    if (FLLineResult == 1 && FRLineResult == 1 && leftLineResult == 1 && rightLineResult == 1 && time_diff > 2000) { //FOR TESTING
       LMotor->setSpeed(0);
       RMotor->setSpeed(0);
       digitalWrite(blueLEDPIN, LOW);
@@ -517,7 +518,7 @@ void turn_left(int delay_time, int detection){
     int leftLineResult = digitalRead(leftLineSensorPIN);
     int rightLineResult = digitalRead(rightLineSensorPIN);
     
-    testing_line_sensors(FLLineResult, FRLineResult, leftLineResult, rightLineResult);
+    //testing_line_sensors(FLLineResult, FRLineResult, leftLineResult, rightLineResult);
 
     end_time = millis();
     time_diff = end_time - start_time;

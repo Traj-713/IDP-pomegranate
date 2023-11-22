@@ -60,7 +60,7 @@ bool return_to_base = false;
 bool magnetic = false;
 int speed = 160;
 
-int turn_delay = 0;
+
 
 // setting up prototype functions. stops rare error...
 

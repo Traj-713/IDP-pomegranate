@@ -62,15 +62,20 @@ void claw() {
     RMotor->run(BACKWARD);
     LMotor->run(BACKWARD);
     
-    RMotor->setSpeed(150);
-    LMotor->setSpeed(150);
+    RMotor->setSpeed(100);
+    LMotor->setSpeed(100);
 
 
     
   
-    while (time_diff < 2000) {
+    while (time_diff < 2500) {
       mag = digitalRead(magnetPIN);
       end_time = millis();
+
+      int FLLineResult = digitalRead(frontLeftLineSensorPIN);
+      int FRLineResult = digitalRead(frontRightLineSensorPIN);
+
+      error_correction_backward(speed, FLLineResult, FRLineResult);
 
       // shimmy_end = millis();
       // shimmy_duration = shimmy_end - start_time;
@@ -90,7 +95,7 @@ void claw() {
       // }
 
       time_diff = end_time - start_time;
-    if (time_diff > 1000) {
+    if (time_diff > 1500) {
           RMotor->setSpeed(0);
           LMotor->setSpeed(0);
     }
